@@ -25,10 +25,10 @@ public class JWTServiceIMPL implements JWTService {
     }
 
     @Override
-    public String jwtToken(String reg_no, Map<String,String> clams) {
+    public String jwtToken(String email, Map<String,String> clams) {
         return Jwts.builder()
                 .claims(clams)
-                .subject(reg_no)
+                .subject(email)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+1000*60*60*24*30))
                 .signWith(secretKey)
@@ -36,7 +36,7 @@ public class JWTServiceIMPL implements JWTService {
     }
 
     @Override
-    public String getRegNo(String token) {
+    public String getEmail(String token) {
         try {
             return Jwts.parser()
                     .verifyWith(secretKey)
