@@ -26,7 +26,7 @@ public class MyUserDetailServiceIMPL implements UserDetailsService {
         UserEntity userEntity =userRepository.findByRegNo(reg_no).orElse(null);
         if(userEntity != null){
             UserDetails user = User.builder()
-                    .username(userEntity.getRegNo())
+                    .username(userEntity.getId().toString())
                     .password(userEntity.getPassword())
                     .build();
             return user;
