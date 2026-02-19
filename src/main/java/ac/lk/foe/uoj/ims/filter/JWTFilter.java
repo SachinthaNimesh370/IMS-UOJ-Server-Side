@@ -59,7 +59,7 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         UserDetails userDetails= User.builder()
-                .username(userData.getRegNo())
+                .username(userData.getId().toString())
                 .password(userData.getPassword())
                 .build();
 
