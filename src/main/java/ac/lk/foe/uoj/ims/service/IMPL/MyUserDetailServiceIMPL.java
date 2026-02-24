@@ -22,8 +22,8 @@ public class MyUserDetailServiceIMPL implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String reg_no) throws UsernameNotFoundException {
-        UserEntity userEntity =userRepository.findByRegNo(reg_no).orElse(null);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity =userRepository.findByEmail(email).orElse(null);
         if(userEntity != null){
             UserDetails user = User.builder()
                     .username(userEntity.getId().toString())

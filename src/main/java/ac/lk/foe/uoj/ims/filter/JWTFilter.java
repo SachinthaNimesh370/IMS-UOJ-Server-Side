@@ -43,12 +43,12 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
         String jwt_token=authorization.split(" ")[1];
-        String reg_no = jwtService.getRegNo(jwt_token);
-        if(reg_no==null){
+        String email = jwtService.getEmail(jwt_token);
+        if(email==null){
             filterChain.doFilter(request,response);
             return;
         }
-        UserEntity userData = userRepository.findByRegNo(reg_no).orElse(null);
+        UserEntity userData = userRepository.findByEmail(email).orElse(null);
         if(userData==null){
             filterChain.doFilter(request,response);
 
