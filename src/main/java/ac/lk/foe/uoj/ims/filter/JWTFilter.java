@@ -51,15 +51,17 @@ public class JWTFilter extends OncePerRequestFilter {
         UserEntity userData = userRepository.findByEmail(email).orElse(null);
         if(userData==null){
             filterChain.doFilter(request,response);
+            System.out.println(response);
 
         }
         if (SecurityContextHolder.getContext().getAuthentication()!=null){
             filterChain.doFilter(request,response);
+            System.out.println(response);
             return;
         }
 
         UserDetails userDetails= User.builder()
-                .username(userData.getId().toString())
+                .username(userData.getEmail())
                 .password(userData.getPassword())
                 .build();
 
