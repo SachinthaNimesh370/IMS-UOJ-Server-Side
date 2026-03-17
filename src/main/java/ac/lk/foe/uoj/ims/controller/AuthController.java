@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -48,16 +48,31 @@ public class AuthController {
         ServiceResponse message = userService.signIn(userLoginRequestDTO);
         System.out.println(message.getObject());
         if(message.isSuccess()){
-            return  new ResponseEntity<StandardResponce>(
-                    new StandardResponce(
-                            200,"Ok",new UserLoginResponceDTO(
-                            message.getObject(), LocalDateTime.now()),message.getRole()),
+            // Build the response DTO; add department info for non-admin roles
+            UserLoginResponceDTO responseDTO = new UserLoginResponceDTO();
+            responseDTO.setMassage(message.getObject());
+            responseDTO.setTime(LocalDateTime.now());
+
+            java.util.Map<String, String> claims = message.getRole();
+            String role = claims != null ? claims.get("role") : null;
+            boolean isAdmin = "ADMIN".equalsIgnoreCase(role);
+
+            if (!isAdmin && claims != null) {
+                String deptIdStr = claims.get("departmentId");
+                if (deptIdStr != null) {
+                    responseDTO.setDepartmentId(Long.parseLong(deptIdStr));
+                }
+                responseDTO.setDepartmentName(claims.get("departmentName"));
+            }
+
+            return new ResponseEntity<StandardResponce>(
+                    new StandardResponce(200, "Ok", responseDTO, claims),
                     HttpStatus.OK);
         }else {
-            return  new ResponseEntity<StandardResponce>(
-                    new StandardResponce(
-                            400,"Bad Request", new UserLoginResponceDTO(
-                            message.getObject(),null),null),
+            UserLoginResponceDTO errorDTO = new UserLoginResponceDTO();
+            errorDTO.setMassage(message.getObject());
+            return new ResponseEntity<StandardResponce>(
+                    new StandardResponce(400, "Bad Request", errorDTO, null),
                     HttpStatus.BAD_REQUEST);
         }
 

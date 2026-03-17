@@ -20,4 +20,5 @@ public class UserRegRequestDTO {
     private String gender;
     private boolean state;
     private String password;
+    private Long departmentId;
 }

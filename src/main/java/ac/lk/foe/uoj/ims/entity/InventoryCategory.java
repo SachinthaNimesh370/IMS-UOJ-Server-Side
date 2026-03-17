@@ -1,14 +1,12 @@
 package ac.lk.foe.uoj.ims.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "inventory_category")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +16,5 @@ public class InventoryCategory {
     private Long id;
 
     private String categoryName;
-    private String CategoryDesc;
+    private String categoryDesc;
 }
