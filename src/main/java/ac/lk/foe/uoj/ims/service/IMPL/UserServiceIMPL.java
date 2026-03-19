@@ -3,6 +3,7 @@ package ac.lk.foe.uoj.ims.service.IMPL;
 
 import ac.lk.foe.uoj.ims.dto.UserLoginRequestDTO;
 import ac.lk.foe.uoj.ims.dto.UserRegRequestDTO;
+import ac.lk.foe.uoj.ims.dto.UserResponseDTO;
 import ac.lk.foe.uoj.ims.entity.UserEntity;
 import ac.lk.foe.uoj.ims.repo.UserRepository;
 import ac.lk.foe.uoj.ims.service.UserService;
@@ -108,13 +109,17 @@ public class UserServiceIMPL implements UserService {
     // ─── User Management (Admin) ────────────────────────────────────────────────
 
     @Override
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserResponseDTO::new)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Override
-    public List<UserEntity> getPendingUsers() {
-        return userRepository.findByState(false);
+    public List<UserResponseDTO> getPendingUsers() {
+        return userRepository.findByState(false).stream()
+                .map(UserResponseDTO::new)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Override

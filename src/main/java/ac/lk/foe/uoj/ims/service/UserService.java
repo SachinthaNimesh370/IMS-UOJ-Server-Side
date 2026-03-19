@@ -3,6 +3,7 @@ package ac.lk.foe.uoj.ims.service;
 
 import ac.lk.foe.uoj.ims.dto.UserLoginRequestDTO;
 import ac.lk.foe.uoj.ims.dto.UserRegRequestDTO;
+import ac.lk.foe.uoj.ims.dto.UserResponseDTO;
 import ac.lk.foe.uoj.ims.entity.UserEntity;
 import ac.lk.foe.uoj.ims.utill.ServiceResponse;
 
@@ -14,8 +15,8 @@ public interface UserService {
     boolean isEnablePerson(String email);
 
     // User Management (Admin)
-    List<UserEntity> getAllUsers();
-    List<UserEntity> getPendingUsers();
+    List<UserResponseDTO> getAllUsers();
+    List<UserResponseDTO> getPendingUsers();
     ServiceResponse approveUser(Long id);
     ServiceResponse updateUser(Long id, UserRegRequestDTO dto);
     ServiceResponse deactivateUser(Long id);

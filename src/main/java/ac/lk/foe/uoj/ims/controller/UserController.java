@@ -1,6 +1,7 @@
 package ac.lk.foe.uoj.ims.controller;
 
 import ac.lk.foe.uoj.ims.dto.UserRegRequestDTO;
+import ac.lk.foe.uoj.ims.dto.UserResponseDTO;
 import ac.lk.foe.uoj.ims.entity.UserEntity;
 import ac.lk.foe.uoj.ims.service.UserService;
 import ac.lk.foe.uoj.ims.utill.ServiceResponse;
@@ -26,7 +27,7 @@ public class UserController {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<StandardResponce> getAllUsers() {
-        List<UserEntity> users = userService.getAllUsers();
+        List<UserResponseDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(new StandardResponce(200, "Success", users, null));
     }
 
@@ -34,7 +35,7 @@ public class UserController {
     @GetMapping("/pending")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<StandardResponce> getPendingUsers() {
-        List<UserEntity> users = userService.getPendingUsers();
+        List<UserResponseDTO> users = userService.getPendingUsers();
         return ResponseEntity.ok(new StandardResponce(200, "Success", users, null));
     }
 
